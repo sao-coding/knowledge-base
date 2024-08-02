@@ -19,9 +19,9 @@ import NewChatButton from "./new-chat-button"
 
 const LeftSidebar = () => {
   const { isLoading, data } = useQuery({
-    queryKey: ["conversations"],
+    queryKey: ["list"],
     queryFn: async () => {
-      const res = await fetch("/api/conversations", {
+      const res = await fetch("/api/list", {
         method: "GET",
         headers: {
           "Content-Type": "application/json"
@@ -35,7 +35,7 @@ const LeftSidebar = () => {
   const queryClient = useQueryClient()
 
   const deleteConversation = async (id: string) => {
-    const res = await fetch("/api/conversations", {
+    const res = await fetch("/api/list", {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json"
@@ -46,7 +46,7 @@ const LeftSidebar = () => {
     const data = await res.json()
 
     if (data.message === "Success") {
-      queryClient.invalidateQueries({ queryKey: ["conversations"] })
+      queryClient.invalidateQueries({ queryKey: ["list"] })
       router.push("/")
     } else {
       toast.error("刪除失敗")
@@ -56,7 +56,7 @@ const LeftSidebar = () => {
   return (
     <>
       <div className='flex h-14 items-center justify-between'>
-        <div className='px-2 text-xl'>GPT</div>
+        <div className='px-2 text-xl'>Knowledge Base</div>
         <NewChatButton />
       </div>
       <div className='mt-4'>
